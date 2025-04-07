@@ -24,4 +24,8 @@ public class Page implements Serializable {
         return records;
     }
 
+    public String[] getRecordByIndex(int recordNumber) {
+        return records.get(recordNumber);
+    }
+
 }
