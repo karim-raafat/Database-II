@@ -15,6 +15,7 @@ public class Table implements Serializable {
     public Table(String tableName, String[] columnsNames) {
         this.tableName = tableName;
         this.columnNames = columnsNames;
+        this.pages = new ArrayList<Page>();
         this.trace = new ArrayList<String>();
     }
 

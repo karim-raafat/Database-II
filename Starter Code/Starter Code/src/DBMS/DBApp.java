@@ -12,11 +12,11 @@ import java.util.Collections;
 import org.junit.Test;
 
 public class DBApp {
-	static int dataPageSize = -100;
+	static int dataPageSize = 100;
 
 	public static void createTable(String tableName, String[] columnsNames) {
 		Table table = new Table(tableName, columnsNames);
-		table.addTrace(FileManager.trace());
+		table.addTrace("Table created name:" + tableName + ", columnsNames:" + Arrays.toString(columnsNames));
 		FileManager.storeTable(tableName, table);
 
 	}
@@ -35,10 +35,9 @@ public class DBApp {
 		}
 
 		lastPage.addRecord(record);
-		table.addTrace(FileManager.trace());
+		table.addTrace("Row inserted into table:" + tableName + ", record:" + Arrays.toString(record));
 		FileManager.storeTablePage(tableName, lastPage.pageNumber, lastPage);
 		FileManager.storeTable(tableName, table);
-
 	}
 
 	public static ArrayList<String[]> select(String tableName) {
@@ -48,7 +47,7 @@ public class DBApp {
 			Page page = FileManager.loadTablePage(tableName, i);
 			result.addAll(page.getAllRecords());
 		}
-		table.addTrace(FileManager.trace());
+		table.addTrace("Select all from table:" + tableName);
 		FileManager.storeTable(tableName, table);
 		return result;
 	}
@@ -62,7 +61,7 @@ public class DBApp {
 				result.add(page.getRecordByIndex(recordNumber));
 			}
 		}
-		table.addTrace(FileManager.trace());
+		table.addTrace("Select from table:" + tableName + ", page:" + pageNumber + ", record:" + recordNumber);
 		FileManager.storeTable(tableName, table);
 		return result;
 	}
@@ -77,7 +76,7 @@ public class DBApp {
 					result.add(record);
 			}
 		}
-		table.addTrace(FileManager.trace());
+		table.addTrace("Select from table:" + tableName + ", condition: " + Arrays.toString(cols) + "=" + Arrays.toString(vals));
 		FileManager.storeTable(tableName, table);
 
 		return result;
@@ -113,6 +112,7 @@ public class DBApp {
 				System.out.print(str + " ");
 			}
 			System.out.println();
+
 		}
 
 		System.out.println("--------------------------------");
@@ -146,7 +146,8 @@ public class DBApp {
 		FileManager.reset();
 		System.out.println("--------------------------------");
 		System.out.println("The trace of the Tables Folder after resetting:");
-		System.out.println(FileManager.trace());
+		System.out.println(FileManager.trace());		
+		
 	}
 
 }
