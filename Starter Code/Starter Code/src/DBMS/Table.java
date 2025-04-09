@@ -21,12 +21,19 @@ public class Table implements Serializable {
 
     public boolean match(String[] columns, String[] vals, String[] records) {
         for (int i = 0; i < columns.length; i++) {
+        	boolean check = false;
             for (int j = 0; j < columnNames.length; j++) {
-                if (columnNames[j].equals(columns[i]) && records[j].equals(vals[i]))
-                    return true;
+                if (columnNames[j].equals(columns[i])) {
+                	if (records[j].equals(vals[i])) {
+                		check = true;
+                		break;
+                	}
+                }
             }
+            if(!check)
+            	return false;
         }
-        return false;
+        return true;
     }
 
     public void addTrace(String msg) {
@@ -40,5 +47,23 @@ public class Table implements Serializable {
     public String getLastTrace() {
         return trace.isEmpty() ? "" : trace.get(trace.size() - 1);
     }
+
+	public String getRecordsCount() {
+	    int count = 0;
+	    for (int i = 0; i < pages.size(); i++) {
+	        Page page = FileManager.loadTablePage(tableName, i);
+	        count += page.getAllRecords().size();
+	    }
+	    return Integer.toString(count);
+	}
+	public String toString() {
+	    String r = "";
+	    for (int i = 0; i < pages.size(); i++) {
+	        Page page = FileManager.loadTablePage(tableName, i);
+	        System.out.println(page.toString());
+	        r += page.toString();
+	    }
+	    return r;
+	}
 
 }

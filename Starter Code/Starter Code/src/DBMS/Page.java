@@ -27,5 +27,17 @@ public class Page implements Serializable {
     public String[] getRecordByIndex(int recordNumber) {
         return records.get(recordNumber);
     }
+    
+    public String toString() {
+    	String r ="";
+    	for(int i = 0; i<records.size(); i++) {
+    		for (int j =0; j<records.get(i).length; j++){
+    			r+= " "+ records.get(i)[j];
+    		}
+    		
+    	}
+    	
+    	return r;
+    }
 
 }
